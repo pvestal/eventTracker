@@ -5,6 +5,7 @@
     <p>Location: {{event.location}}</p>
     <p>Description: {{event.description}}</p>
     <p>Organizer: {{event.organizer}}</p>
+    <p>Status: {{event.status}}</p>
   </div>
 </template>
 

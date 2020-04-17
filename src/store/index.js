@@ -62,20 +62,22 @@ export default new Vuex.Store({
     addEvent({ commit }, payload) {
       commit('SET_LOADING', true)
       let eventData = {
+        id: payload.id,
         organizer: payload.organizer,
         description: payload.description,
         location: payload.location,
         startDate: payload.startDate,
         endDate: payload.endDate,
         addedDate: payload.addedDate,
-        attendees: []
+        status: payload.status,
+        attendees: payload.attendees
       }
-      let docRef = firebase.firestore().collection('events').doc()
-      console.log("docRef ID: ", docRef.id)
-      return firebase.firestore().collection('events').doc(docRef.id).set({
-        ...eventData,
-        id: docRef.id
-      })
+      commit('ADD_EVENT', eventData)
+      commit('SET_LOADING', false)
+      // let docRef = firebase.firestore().collection('events').doc()
+      // console.log("docRef ID: ", docRef.id)
+      // return firebase.firestore().collection('events').doc(docRef.id).set({
+      return firebase.firestore().collection('events').doc(payload.id).set(eventData)
       .then((event) => {
         commit('ADD_EVENT', event)
         commit('SET_LOADING', false)
@@ -150,6 +152,9 @@ export default new Vuex.Store({
     },
     events(state) {
       return state.events
+    },
+    eventsCount(getters) {
+      return getters.events.length
     },
     getEventById: state => id => {
       return state.events.find(event => event.id === id)

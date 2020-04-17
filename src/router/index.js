@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import EventCreate from '../views/EventCreate.vue'
 import EventList from '../views/EventList.vue'
+import EventList2 from '../views/EventList2.vue'
 import EventShow from '../views/EventShow.vue'
+import Login from '../views/Login'
 import User from '../views/User.vue'
 import NotFound from '../views/NotFound.vue'
 
@@ -13,6 +15,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'event-list',
     component: EventList
+  },
+  {
+    path: '/sort',
+    name: 'event-list2',
+    component: EventList2
   },
   {
     path: '/event/:id',
@@ -30,6 +37,11 @@ Vue.use(VueRouter)
     name: 'user',
     component: User,
     props: true
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   },
   {
     path: '*',

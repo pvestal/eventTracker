@@ -39,13 +39,13 @@ new Vue({
   render: h => h(App),
   created() {
     firebase.initializeApp({
-    apiKey: "XXX",
-    authDomain: "XXX",
-    databaseURL: "XXX",
-    projectId: "XXX",
-    storageBucket: "XXX",
-    messagingSenderId: "XXX",
-    appId: "XXX"
+      apiKey: "AIzaSyCP5-G6Xy4GGp7JyW41dJkpkmdnQG51Aag",
+      authDomain: "vaca-spots.firebaseapp.com",
+      databaseURL: "https://vaca-spots.firebaseio.com",
+      projectId: "vaca-spots",
+      storageBucket: "vaca-spots.appspot.com",
+      messagingSenderId: "923386838477",
+      appId: "1:923386838477:web:4b272eeae4196d1cc6d884"
 
     });
     

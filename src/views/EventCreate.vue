@@ -78,6 +78,7 @@ export default {
     startDate: new Date().toISOString().substr(0, 10),
     endDate: new Date().toISOString().substr(0, 10),
     addedDate: new Date().toISOString().substr(0, 10),
+    status: "Pending",
     attendees: [],
     
   }),
@@ -95,6 +96,7 @@ export default {
         endDate: this.endDate,
         addedDate: this.addedDate,
         attendees: this.attendees,
+        status: this.status
       }
       this.$store
         .dispatch("addEvent", event)

@@ -4,7 +4,8 @@
       
       <span class="eyebrow">Start: {{ event.startDate }} </span><span class="eyebrow">End: {{event.endDate}}</span>
       <h4 class="title">{{event.location}}</h4>
-      <BaseIcon name="users">{{event.attendees.length}} attendees</BaseIcon>
+      <BaseIcon name="users">{{event.attendees.length}} attendees  </BaseIcon>
+      <BaseIcon name="info">status: {{event.status}}</BaseIcon>
     </div>
   </router-link>
 </template>
