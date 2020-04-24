@@ -1,6 +1,6 @@
 <template>
-  <div id="nav" class="nav">
-    <router-link to="/" class="brand">Vaca-List</router-link>
+  <div id="nav">
+    <!-- <router-link to="/">Vaca-List</router-link> -->
     <nav>
       <router-link :to="{name: 'event-list'}">List</router-link> |
       <router-link :to="{name: 'event-list2'}">Sort</router-link> |

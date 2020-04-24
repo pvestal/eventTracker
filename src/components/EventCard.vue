@@ -2,7 +2,7 @@
   <router-link class="event-link" :to="{name: 'event-show', params: {id: event.id}}">
     <div class="event-card -shadow">
       
-      <span class="eyebrow">Start: {{ event.startDate }} </span><span class="eyebrow">End: {{event.endDate}}</span>
+      <span class="eyebrow">Added: {{ event.addedDate }} </span>
       <h4 class="title">{{event.location}}</h4>
       <BaseIcon name="users">{{event.attendees.length}} attendees  </BaseIcon>
       <BaseIcon name="info">status: {{event.status}}</BaseIcon>

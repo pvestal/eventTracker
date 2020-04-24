@@ -10,16 +10,16 @@
         <tr>
           <th class="text-left" @click="sortBy('location')">Location</th>
           <th class="text-left" @click="sortBy('organizer')">Person</th>
-          <th class="text-left" @click="sortBy('startDate')">Start Date</th>
+          <th class="text-left" @click="sortBy('addedDate')">Added Date</th>
           <th class="text-left" @click="sortBy('status')">Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in events" :key="item.name">
-          <td>{{ item.location }}</td>
-          <td>{{ item.organizer }}</td>
-          <td>{{ item.startDate }}</td>
-          <td>{{ item.status }}</td>
+        <tr v-for="event in events" :key="event.name" @click="goHere(event.id)" >
+          <td>{{ event.location }}</td>
+          <td>{{ event.organizer }}</td>
+          <td>{{ event.addedDate }}</td>
+          <td>{{ event.status }}</td>
         </tr>
       </tbody>
     </template>
@@ -36,6 +36,9 @@ export default {
   methods: {
     sortBy(property) {
       this.events.sort((a, b) => (a[property] < b[property] ? -1 : 1));
+    },
+    goHere(id) {
+      this.$router.push({name: 'event-show', params: {id}})
     }
   },
   computed: {
