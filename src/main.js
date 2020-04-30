@@ -4,9 +4,12 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
+import VueGeolocation from 'vue-browser-geolocation'
+import * as VueGoogleMaps from 'vue2-google-maps'
 import '@babel/polyfill'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import editEventDialog from '@/components/editEventDialog'
 
 const requireComponent = require.context(
   './components',
@@ -29,6 +32,14 @@ requireComponent.keys().forEach(fileName => {
   )
 })
 Vue.config.productionTip = false
+Vue.component('edit-event', editEventDialog )
+Vue.use(VueGeolocation)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBOux7umAUibMWJof5z3NE5jliX4FCZIrg',
+    // libraries: 'places', 
+  }
+})
 
 
 

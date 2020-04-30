@@ -9,26 +9,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    events: [
-      {
-        id: 1, title: 'Tepoztlán, Mexico', date: 'TBD', added: '14 April 2020', addedBy: 'Karla',
-        attendees: [{ id: 'abc123', name: 'Karla' }, { id: 'def456', name: 'Patrick' }]
-      },
-      {
-        id: 2, title: 'Seattle, Washington', date: 'TBD', added: '14 April 2020', addedBy: 'Karla',
-        attendees: [{ id: 'abc123', name: 'Karla' }, { id: 'def456', name: 'Patrick' }]
-      },
-      {
-        id: 3, title: 'Hawaii', date: 'TBD', added: '14 April 2020', addedBy: 'Patrick',
-        attendees: [{ id: 'abc123', name: 'Karla' }, { id: 'def456', name: 'Patrick' }]
-      },
-    ],
-    categories: [
-      { id: 1, title: 'Hotel' },
-      { id: 2, title: 'Experience' },
-      { id: 3, title: 'Food' },
-      { id: 4, title: 'Idea' }
-    ],
+    events: [],
     user: null,
     loading: false,
     error: null
@@ -36,6 +17,29 @@ export default new Vuex.Store({
   mutations: {
     ADD_EVENT(state, payload) {
       state.events.push(payload)
+    },
+    UPDATE_EVENT(state, payload) {
+      const event = state.events.find(event => {
+        return event.id === payload.id
+      })
+      if(payload.location) {
+        event.location = payload.location
+      }
+      if(payload.description) {
+        event.description = payload.description
+      }
+      if(payload.organizer) {
+        event.organizer = payload.organizer
+      }
+      if(payload.status) {
+        event.status = payload.status
+      }
+      if(payload.startDate) {
+        event.startDate = payload.startDate
+      }
+      if(payload.endDate) {
+        event.endDate = payload.endDate
+      }
     },
     SET_EVENTS(state, payload) {
       state.events = payload
@@ -52,36 +56,85 @@ export default new Vuex.Store({
     CLEAR_ERROR(state) {
       state.error = null
     },
+    DELETE_EVENT(state, id) {
+      const event = state.events.map(item => item.id).indexOf(id);
+      state.events.splice(event, 1);
+    }
   },
   actions: {
     getId() {
       let docRef = firebase.firestore().collection('events').doc()
       console.log("docRef ID: ", docRef.id)
-      return docRef
+      return docRef.id
     },
-    addEvent({ commit }, payload) {
+    //({ commit, dispatch }, params) {
+    addEvent({ commit, dispatch }, payload) {
+      console.log("payload from addEvent: ", payload)
       commit('SET_LOADING', true)
-      let eventData = {
-        id: payload.id,
-        organizer: payload.organizer,
-        description: payload.description,
-        location: payload.location,
-        startDate: payload.startDate,
-        endDate: payload.endDate,
-        addedDate: payload.addedDate,
-        status: payload.status,
-        attendees: payload.attendees
-      }
-      commit('ADD_EVENT', eventData)
-      commit('SET_LOADING', false)
-      // let docRef = firebase.firestore().collection('events').doc()
-      // console.log("docRef ID: ", docRef.id)
-      // return firebase.firestore().collection('events').doc(docRef.id).set({
-      return firebase.firestore().collection('events').doc(payload.id).set(eventData)
+      dispatch('getId')
+      .then(id => {
+        let eventData = {
+          id: id,
+          organizer: payload.organizer,
+          description: payload.description,
+          location: payload.location,
+          startDate: payload.startDate,
+          endDate: payload.endDate,
+          addedDate: payload.addedDate,
+          status: payload.status,
+          attendees: payload.attendees.push(payload.organizer)
+        }
+        console.log("eventData: ", eventData)
+        return firebase.firestore().collection('events').doc(eventData.id).set(eventData)
+      })
       .then((event) => {
         commit('ADD_EVENT', event)
         commit('SET_LOADING', false)
-        // return event.data()
+      })
+      .catch(error => {
+        console.log(error)
+        commit('SET_ERROR', error)
+        commit('SET_LOADING', false)
+      })
+    },
+    updateEvent({commit}, payload) {
+      commit('SET_LOADING', true)
+      const updateObj = {}
+      if (payload.location) {
+        updateObj.location = payload.location
+      }
+      if(payload.description) {
+        updateObj.description = payload.description
+      }
+      if(payload.organizer) {
+        updateObj.organizer = payload.organizer
+      }
+      if(payload.status) {
+        updateObj.status = payload.status 
+      }
+      if(payload.startDate) {
+        updateObj.startDate = payload.startDate 
+      }
+      if(payload.endDate) {
+        updateObj.endDate = payload.endDate 
+      }
+      firebase.firestore().collection('events').doc(payload.id).update(updateObj)
+      .then(() => {
+        console.log("project updated in db")
+        commit('UPDATE_EVENT', payload)
+        commit('SET_LOADING', false)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('SET_LOADING', false)
+      })
+    },
+    deleteEvent({ commit}, eventId) {
+      commit('SET_LOADING', true)
+        return firebase.firestore().collection('events').doc(eventId).delete()
+      .then((event) => {
+        commit('DELETE_EVENT', event)
+        commit('SET_LOADING', false)
       })
       .catch(error => {
         console.log(error)

@@ -4,25 +4,34 @@
       <v-form>
         <v-container>
           <v-row>
-            <v-text-field
+            <!-- <v-text-field
               v-model="id"
               @click="getId()"
               label="Click for ID"
               readonly
+              clearable
               prepend-icon="mdi-gesture-tap-button"
-            ></v-text-field>
+            ></v-text-field> -->
           </v-row>
           <v-row>
             <v-col>
-              <v-select v-model="organizer" :items="organizers" label="Organizer"></v-select>
-            </v-col>
-            <v-col>
-              <v-text-field v-model="location" label="Event Location"></v-text-field>
+              <v-select v-model="organizer" :items="organizers" label="Organizer" clearable></v-select>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-textarea v-model="description" name="description" label="Event Description"></v-textarea>
+              <p>Link to input for google map search</p>
+              <v-text-field v-model="location" label="Event Location" clearable></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-textarea v-model="description" name="description" label="Event Description" clearable></v-textarea>
             </v-col>
           </v-row>
           <!-- <v-row>
@@ -85,7 +94,12 @@
 </template>
 
 <script>
+// import addMarker from '../components/AddMarker'
+
 export default {
+  components: {
+    // addMarker
+  },
   data: () => ({
     startDateModal: false,
     endDateModal: false,
@@ -104,10 +118,8 @@ export default {
     createEvent() {
       console.log("fired");
       const event = {
-        id: this.id,
-        category: this.category,
+        // id: this.id,
         organizer: this.organizer,
-        title: this.title,
         description: this.description,
         location: this.location,
         startDate: this.startDate,
@@ -119,7 +131,8 @@ export default {
       this.$store
         .dispatch("addEvent", event)
         .then(() =>
-          this.$router.push({ name: "event-show", params: { id: this.id } })
+          // this.$router.push({ name: "event-show", params: { id: this.id } })
+          this.$router.push('/')
         )
         .catch(error => console.log(error));
     },

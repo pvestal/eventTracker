@@ -8,8 +8,8 @@
           <v-btn color="primary" dark v-on="on">Menu</v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="(item, index) in navMenu" :key="index" :to="item.url">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item v-for="(event, index) in navMenu" :key="index" :to="event.url">
+            <v-list-item-title>{{ event.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -32,13 +32,13 @@ export default {
     return {
       showPassword: false,
       navMenu: [
-        { id: 1, title: "Home", url: "/" },
-        { id: 2, title: "Login", url: "/login" },
-        { id: 3, title: "Sort", url: "/sort" },
-        { id: 4, title: "Create", url: "/event/create" }
+        { id: 1, title: "Home", url: '/'},
+        { id: 2, title: "Login", url: '/login' },
+        { id: 3, title: "Sort", url: '/sort' },
+        { id: 4, title: "Create", url: '/event/create'}
       ]
     };
-  }
+  },
 };
 </script>
 

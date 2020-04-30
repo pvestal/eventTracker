@@ -11,19 +11,10 @@ export default {
   components: {
     EventCard
   },
-  data() {
-    return {
-      
-    }
-  },
   computed: {
-      events() {
-        return this.$store.getters.events
-      },
+    events() {
+      return this.$store.getters.events;
+    }
   }
-
 };
 </script>
-
-<style>
-</style>
